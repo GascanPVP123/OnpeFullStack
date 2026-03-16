@@ -1,0 +1,154 @@
+@using System.Data
+@model DataTable
+
+@{
+    ViewData["Title"] = "Resultados Presidenciales";
+}
+
+<div class="container-fluid" style="max-width: 1200px;"> @* Usamos container-fluid para mejor control *@
+    <div class="row mb-3">
+        <div class="col-12">
+            <img src="~/images/f-presidencial.jpg" class="img-fluid" style="filter: grayscale(100%); width: 100%; height: 180px; object-fit: cover; border-bottom: 3px solid #bf9411;" />
+        </div>
+    </div>
+
+     <div class="row g-0 text-center mb-4">
+        <div class="col-md-4">
+            <div class="p-4 text-white" style="background-color: #1b2b48; cursor: pointer;">
+                <h5 class="mb-0 fw-bold" style="font-size: 0.9rem;">PRESIDENCIAL</h5>
+            </div>
+        </div>
+    
+        <div class="col-md-4">
+            <div class="p-4 text-muted" style="background-color: #e6e6e6; cursor: pointer;">
+                <h5 class="mb-0 fw-bold" style="font-size: 0.9rem;">ACTAS</h5>
+            </div>
+        </div>
+    
+        <div class="col-md-4">
+            <div class="p-4 text-white" style="background-color: #c13138; cursor: pointer;">
+                <h5 class="mb-0 fw-bold" style="font-size: 0.9rem;">PARTICIPACIÓN CIUDADANA</h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        
+        <div class="col-md-3">
+            <div class="list-group shadow-sm">
+                <a href="/Onpe/ResumenGeneral" class="list-group-item list-group-item-action @(ViewContext.RouteData.Values["Action"].ToString() == "ResumenGeneral" ? "active bg-onpe border-0" : "")">
+                    RESUMEN GENERAL
+                </a>
+                <a href="/Onpe/ResultadosPresidenciales" class="list-group-item list-group-item-action @(ViewContext.RouteData.Values["Action"].ToString() == "Resultados" ? "active bg-onpe border-0" : "")">
+                    RESULTADOS PRESIDENCIALES
+                </a>
+                <a href="#" class="list-group-item list-group-item-action text-muted">
+                    RESULTADOS POR TIPO DE VOTOS
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <h3 class="text-primary mb-4" style="color: #004586 !important; font-weight: bold;">PRESENTACIÓN DE RESULTADOS</h3>
+
+            @if (Model != null && Model.Rows.Count > 0)
+            {
+                var r = Model.Rows[0];
+
+                <h5 class="text-white p-2 mt-2" style="background-color: #bf9411; font-size: 0.9rem;">RESUMEN GENERAL DE ELECCIONES PRESIDENCIALES</h5>
+                <table class="table table-bordered text-center align-middle shadow-sm mb-5">
+                    <thead class="table-light">
+                        <tr style="font-size: 0.85rem;">
+                            <th colspan="2">ORGANIZACIÓN POLÍTICA</th>
+                            <th>TOTAL</th>
+                            <th>% VOTOS VÁLIDOS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="width: 50px;"><img src="~/images/simbolo_ppk.jpg" width="30" /></td>
+                            <td class="text-start">
+                                <img src="~/images/pkk.jpg" width="30" class="me-2" style="border-radius: 3px;" /> 
+                                <span style="font-size: 0.85rem; font-weight: bold;">PERUANOS POR EL KAMBIO</span>
+                            </td>
+                            <td style="font-weight: bold;">@string.Format("{0:N0}", r["VotosP1"])</td>
+                            <td style="font-weight: bold;">@r["PorcentajeP1"] %</td>
+                        </tr>
+                        <tr>
+                            <td><img src="~/images/simbolo_keyko.jpg" width="30" /></td>
+                            <td class="text-start">
+                                <img src="~/images/keyko.jpg" width="30" class="me-2" style="border-radius: 3px;" /> 
+                                <span style="font-size: 0.85rem; font-weight: bold;">FUERZA POPULAR</span>
+                            </td>
+                            <td style="font-weight: bold;">@string.Format("{0:N0}", r["VotosP2"])</td>
+                            <td style="font-weight: bold;">@r["PorcentajeP2"] %</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h5 class="text-white p-2 mt-4" style="background-color: #bf9411; font-size: 0.9rem;">AVANCE DE ESCRUTINIO</h5>
+                <table class="table table-bordered text-center align-middle small shadow-sm mb-5">
+                    <thead class="table-light">
+                        <tr>
+                            <th colspan="2">TOTAL DE ACTAS</th>
+                            <th>TOTAL</th>
+                            <th>PORCENTAJE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="2" class="text-start ps-4">TOTAL DE ACTAS</td>
+                            <td>@string.Format("{0:N0}", r["TotalActas"])</td>
+                            <td>100.000%</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="text-start ps-4">PROCESADAS</td>
+                            <td>@string.Format("{0:N0}", r["Procesadas"])</td>
+                            <td>100.000%</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="text-start ps-4">CONTABILIZADAS</td>
+                            <td>@string.Format("{0:N0}", r["Contabilizadas"])</td>
+                            <td>100.000%</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="text-start ps-4">PARA ENVÍO AL JEE</td>
+                            <td>0</td>
+                            <td>0.000%</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="text-start ps-4">POR PROCESAR</td>
+                            <td>0</td>
+                            <td>0.000%</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h5 class="text-white p-2 mt-4" style="background-color: #bf9411; font-size: 0.9rem;">PARTICIPACIÓN CIUDADANA *</h5>
+                <table class="table table-bordered text-center align-middle small shadow-sm">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ELECTORES HÁBILES</th>
+                            <th>CIUDADANO QUE VOTARON</th>
+                            <th>% DE PARTICIPACIÓN</th>
+                            <th>% DE AUSENTISMO</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="font-weight: bold;">@string.Format("{0:N0}", r["ElectoresHabiles"])</td>
+                            <td style="font-weight: bold;">@string.Format("{0:N0}", r["CiudadanosVotaron"])</td>
+                            <td style="font-weight: bold;">@r["PorcParticipacion"] %</td>
+                            <td style="font-weight: bold;">@r["PorcAusentismo"] %</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="text-muted mt-2" style="font-size: 0.75rem;">* La participación ciudadana se basa en actas</p>
+            }
+            else
+            {
+                <div class>No se encontraron datos</div>
+            }
+        </div> 
+    </div> 
+</div>

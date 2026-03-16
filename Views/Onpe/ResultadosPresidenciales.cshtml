@@ -1,0 +1,224 @@
+@using System.Data
+@model DataTable
+@{
+    ViewData["Title"] = "Resultados Presidenciales";
+    var r = (Model != null && Model.Rows.Count > 0) ? Model.Rows[0] : null;
+}
+
+<style>
+    .bg-gold { background-color: #bf9411 !important; color: white; }
+    .text-onpe { color: #004586; }
+    .bg-onpe { background-color: #004586 !important; }
+    .table-xs td, .table-xs th { padding: 0.4rem; font-size: 0.75rem; }
+    .glosario-box { font-size: 0.75rem; border: 1px solid #ccc; padding: 15px; background-color: #f9f9f9; border-radius: 5px; }
+    .border-round { border-radius: 20px; border: 1px solid #ccc; }
+    .btn-print { background-color: #f8f9fa; border: 1px solid #ccc; }
+</style>
+
+<div class="container-fluid" style="max-width: 1200px;">
+    @* Banner Superior *@
+    <div class="row mb-3">
+        <div class="col-12 text-center">
+            <img src="~/images/f-presidencial.jpg" class="img-fluid" style="filter: grayscale(100%); width: 100%; height: 180px; object-fit: cover; border-bottom: 3px solid #bf9411;" />
+        </div>
+    </div>
+
+    @* Pestañas Superiores *@
+    <div class="row g-0 text-center mb-4 shadow-sm">
+        <div class="col-md-4">
+            <div class="p-4 text-white" style="background-color: #1b2b48; cursor: pointer;">
+                <h5 class="mb-0 fw-bold" style="font-size: 0.9rem;">PRESIDENCIAL</h5>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-4 text-muted" style="background-color: #e6e6e6; cursor: pointer;">
+                <h5 class="mb-0 fw-bold" style="font-size: 0.9rem;">ACTAS</h5>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-4 text-white" style="background-color: #c13138; cursor: pointer;">
+                <h5 class="mb-0 fw-bold" style="font-size: 0.9rem;">PARTICIPACIÓN CIUDADANA</h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="list-group shadow-sm mb-4">
+                <a href="/Onpe/ResumenGeneral" class="list-group-item list-group-item-action">RESUMEN GENERAL</a>
+                <a href="/Onpe/Resultados" class="list-group-item list-group-item-action active bg-onpe border-0">RESULTADOS PRESIDENCIALES</a>
+                <a href="#" class="list-group-item list-group-item-action text-muted">RESULTADOS POR TIPO DE VOTOS</a>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            @* Barra de Ruta *@
+            <div class="d-flex justify-content-between align-items-center p-2 mb-3 bg-light border-round">
+                <span class="fw-bold text-onpe small ms-2">
+                    <i class="bi bi-arrow-right-circle-fill"></i> SEGUNDA ELECCIÓN PRESIDENCIAL 2016: RESULTADOS PRESIDENCIALES
+                </span>
+                <button class="btn btn-sm btn-print me-2"><i class="bi bi-printer"></i></button>
+            </div>
+
+            <h5 class="bg-gold p-2 mb-3 fw-bold shadow-sm" style="border-radius: 5px;">RESULTADOS DE ELECCIONES PRESIDENCIALES</h5>
+
+            <div class="row mb-4 small fw-bold">
+                <div class="col-md-3">
+                    <label>Ámbito:</label>
+                    <select class="form-select form-select-sm shadow-sm"><option>PERÚ</option></select>
+                </div>
+                <div class="col-md-3">
+                    <label>Departamento:</label>
+                    <select class="form-select form-select-sm shadow-sm"><option>AMAZONAS</option></select>
+                </div>
+                <div class="col-md-3">
+                    <label>Provincia:</label>
+                    <select class="form-select form-select-sm shadow-sm"><option>BONGARA</option></select>
+                </div>
+                <div class="col-md-3">
+                    <label>Distrito:</label>
+                    <select class="form-select form-select-sm shadow-sm"><option>TODOS</option></select>
+                </div>
+            </div>
+
+            @if (r != null)
+            {
+                double vP1 = r["VotosP1"] != DBNull.Value ? Convert.ToDouble(r["VotosP1"]) : 0;
+                double vP2 = r["VotosP2"] != DBNull.Value ? Convert.ToDouble(r["VotosP2"]) : 0;
+                double vBlanco = r["VotosBlanco"] != DBNull.Value ? Convert.ToDouble(r["VotosBlanco"]) : 0;
+                double vNulo = r["VotosNulo"] != DBNull.Value ? Convert.ToDouble(r["VotosNulo"]) : 0;
+                
+                double totalValidos = vP1 + vP2;
+                double totalEmitidos = totalValidos + vBlanco + vNulo;
+                if (totalEmitidos == 0) totalEmitidos = 1; 
+
+                <div class="row justify-content-center mb-4">
+                    <div class="col-md-8">
+                        <div class="d-flex align-items-center p-3 border shadow-sm" style="border-radius: 15px; background-color: #fff; border-color: #bf9411 !important;">
+                            <div class="ms-4 me-4">
+                                <div class="d-flex justify-content-center align-items-center" style="width: 45px; height: 45px; border: 3px solid #ccc; border-radius: 50%;">
+                                    <i class="bi bi-check-lg fs-3 text-secondary"></i>
+                                </div>
+                            </div>
+                            <div class="small fw-bold text-muted">
+                                <ul class="list-unstyled mb-0">
+                                    <li>• ACTAS PROCESADAS: 100.000%</li>
+                                    <li>• ACTAS CONTABILIZADAS: 100.000%</li>
+                                    <li>• ACTUALIZADO EL 20/06/2016 A LAS 19:16 h.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-end mb-2">
+                    <button class="btn btn-primary btn-sm shadow-sm">Ver gráfico de barras</button>
+                </div>
+
+                <table class="table table-bordered text-center align-middle shadow-sm small">
+                    <thead class="bg-light fw-bold text-uppercase" style="font-size: 0.7rem;">
+                        <tr>
+                            <th class="text-start ps-3">ORGANIZACIÓN POLÍTICA</th>
+                            <th>TOTAL</th>
+                            <th>% VOTOS VÁLIDOS</th>
+                            <th>% VOTOS EMITIDOS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-start ps-3"><img src="~/images/simbolo_ppk.jpg" width="20" class="me-2"> PERUANOS POR EL KAMBIO</td>
+                            <td class="fw-bold">@string.Format("{0:N0}", vP1)</td>
+                            <td>@string.Format("{0:N3}", (vP1 * 100 / (totalValidos > 0 ? totalValidos : 1))) %</td>
+                            <td>@string.Format("{0:N3}", (vP1 * 100 / totalEmitidos)) %</td>
+                        </tr>
+                        <tr>
+                            <td class="text-start ps-3"><img src="~/images/simbolo_keyko.jpg" width="20" class="me-2"> FUERZA POPULAR</td>
+                            <td class="fw-bold">@string.Format("{0:N0}", vP2)</td>
+                            <td>@string.Format("{0:N3}", (vP2 * 100 / (totalValidos > 0 ? totalValidos : 1))) %</td>
+                            <td>@string.Format("{0:N3}", (vP2 * 100 / totalEmitidos)) %</td>
+                        </tr>
+                        <tr class="fw-bold bg-light">
+                            <td class="text-start ps-3 text-uppercase">TOTAL DE VOTOS VÁLIDOS</td>
+                            <td>@string.Format("{0:N0}", totalValidos)</td>
+                            <td>100.000 %</td>
+                            <td>@string.Format("{0:N3}", (totalValidos * 100 / totalEmitidos)) %</td>
+                        </tr>
+                        <tr>
+                            <td class="text-start ps-3">VOTOS EN BLANCO</td>
+                            <td>@string.Format("{0:N0}", vBlanco)</td>
+                            <td></td>
+                            <td>@string.Format("{0:N3}", (vBlanco * 100 / totalEmitidos)) %</td>
+                        </tr>
+                        <tr>
+                            <td class="text-start ps-3">VOTOS NULOS</td>
+                            <td>@string.Format("{0:N0}", vNulo)</td>
+                            <td></td>
+                            <td>@string.Format("{0:N3}", (vNulo * 100 / totalEmitidos)) %</td>
+                        </tr>
+                        <tr class="fw-bold bg-light" style="color: #004586;">
+                            <td class="text-start ps-3 text-uppercase">TOTAL DE VOTOS EMITIDOS</td>
+                            <td>@string.Format("{0:N0}", totalEmitidos)</td>
+                            <td></td>
+                            <td>100.000 %</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="row justify-content-center mt-3">
+                    <div class="col-md-8">
+                        <div class="d-flex align-items-center p-3 border shadow-sm" style="border-radius: 20px; border-color: #bf9411 !important; background-color: #fff;">
+                            <div class="me-4 ms-3">
+                                <i class="bi bi-info-circle-fill fs-1 text-secondary" style="opacity: 0.3;"></i>
+                            </div>
+                            <div class="small fw-bold text-muted">
+                                <ul class="list-unstyled mb-0">
+                                    <li>• Ciudadanos que votaron (CV): @string.Format("{0:N0}", r["CiudadanosVotaron"])</li>
+                                    <li>• Electores hábiles (EH): @string.Format("{0:N0}", r["ElectoresHabiles"])</li>
+                                    <li>• Estos datos corresponden a las actas contabilizadas.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @* Cuadros Inferiores (Actas y Mesas) *@
+                <div class="row mt-4 table-xs">
+                    <div class="col-md-6">
+                        <table class="table table-bordered shadow-sm">
+                            <thead class="bg-gold text-white text-uppercase">
+                                <tr><th colspan="2">ACTAS</th><th class="text-end">TOTAL</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td colspan="2" class="fw-bold">ACTAS PROCESADAS *</td><td class="text-end">@string.Format("{0:N0}", r["TotalActas"])</td></tr>
+                                <tr><td colspan="2" class="ps-4">- Contabilizadas Normales</td><td class="text-end">@string.Format("{0:N0}", r["Contabilizadas"])</td></tr>
+                                <tr><td colspan="2" class="fw-bold">ACTAS ENVIADAS AL JEE</td><td class="text-end">0</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <table class="table table-bordered shadow-sm">
+                            <thead class="bg-gold text-white text-uppercase">
+                                <tr><th colspan="2">MESAS A INSTALAR</th><th class="text-end">TOTAL</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td colspan="2" class="fw-bold">MESAS INSTALADAS (N)</td><td class="text-end">@string.Format("{0:N0}", r["TotalActas"])</td></tr>
+                                <tr><td colspan="2" class="ps-4">MESAS NO INSTALADAS (O)</td><td class="text-end">0</td></tr>
+                                <tr><td colspan="2" class="ps-4">MESAS POR INFORMAR (P)</td><td class="text-end">0</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                @* Glosario *@
+                <div class="glosario-box mt-4 shadow-sm">
+                    <div class="fw-bold mb-2 text-decoration-underline text-uppercase" style="font-size: 0.8rem;"><i class="bi bi-caret-down-fill"></i> GLOSARIO</div>
+                    <ul class="list-unstyled mb-0 ms-3" style="line-height: 1.6;">
+                        <li><strong>ACTA CON VOTOS IMPUGNADOS:</strong> Acta con votos impugnados.</li>
+                        <li><strong>ACTA CON ERROR MATERIAL:</strong> Con inconsistencias en los datos numéricos consignados.</li>
+                        <li><strong>ACTA CON ILEGIBILIDAD:</strong> Es aquella que contiene datos ilegibles.</li>
+                    </ul>
+                </div>
+            }
+        </div>
+    </div>
+</div>

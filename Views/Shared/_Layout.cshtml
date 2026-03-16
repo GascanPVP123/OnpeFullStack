@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>ONPE - Procesos Electorales</title>
+		<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+		<style>
+			/* Estilos ONPE */
+			.bg-onpe { background-color: #00468c !important; }
+			.text-onpe { color: #00468c; }
+
+			/* Ajustes Header */
+			.header-top { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; }
+
+			/* Estilos del Footer basados en tu ejemplo */
+			.onpe-footer {
+			background-color: #333;
+			color: #fff;
+			padding: 40px 0 20px 0;
+			font-family: Arial, sans-serif;
+			font-size: 13px;
+			border-top: 6px solid #f39c12; /* Línea naranja característica */
+			}
+			.onpe-footer h5 {
+			color: #f39c12;
+			font-size: 16px;
+			font-weight: bold;
+			margin-bottom: 20px;
+			text-transform: uppercase;
+			}
+			.onpe-footer p { margin-bottom: 8px; color: #ccc; }
+			.onpe-footer .footer-link { color: #ccc; text-decoration: none; display: block; margin-bottom: 8px; }
+			.onpe-footer .footer-link:hover { color: #fff; }
+			.footer-bottom {
+			background-color: #222;
+			padding: 15px 0;
+			margin-top: 30px;
+			font-size: 11px;
+			color: #888;
+			}
+		</style>
+	</head>
+	<body class="d-flex flex-column min-vh-100">
+		<header>
+			<nav class="navbar navbar-dark bg-onpe">
+				<div class="container-fluid header-top">
+					<img src="~/images/onpe-trans.png" alt="ONPE" height="50" />
+					<h4 class="text-white m-0 d-none d-md-block">ONPE - PROCESOS ELECTORALES</h4>
+					<img src="~/images/eegg2016-trans.png" alt="EEGG 2016" height="50" />
+				</div>
+			</nav>
+		</header>
+
+		<div class="container mt-4 flex-grow-1">
+			<main role="main">
+				@RenderBody()
+			</main>
+		</div>
+
+		<footer class="onpe-footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4 mb-4">
+						<h5>Contáctenos</h5>
+						<p>Jr. Washington 1894, Cercado de Lima</p>
+						<p>Lima - Perú</p>
+						<p>Teléfono: 417-0630</p>
+						<p>Correo: informes@onpe.gob.pe</p>
+					</div>
+					<div class="col-md-4 mb-4">
+						<h5>Horario de Atención</h5>
+						<p>Lunes a Viernes</p>
+						<p>08:30 am - 04:30 pm</p>
+					</div>
+					<div class="col-md-4 mb-4">
+						<h5>Enlaces de Interés</h5>
+						<a href="#" class="footer-link">Portal Institucional</a>
+						<a href="#" class="footer-link">Servicio al Ciudadano</a>
+						<a href="#" class="footer-link">Transparencia</a>
+					</div>
+				</div>
+			</div>
+			<div class="footer-bottom text-center">
+				<div class="container">
+					<p class="m-0">© 2026 Oficina Nacional de Procesos Electorales (ONPE). Todos los derechos reservados.</p>
+				</div>
+			</div>
+		</footer>
+
+		<script src="~/lib/jquery/dist/jquery.min.js"></script>
+		<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+		@await RenderSectionAsync("Scripts", required: false)
+	</body>
+</html>
